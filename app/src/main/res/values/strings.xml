@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">driverIn</string>
+    <string name="title_location_permission">Location Permission</string>
+    <string name="text_location_permission">Location Permission</string>
+    <string name="ok">OK</string>
+    <string name="google_maps_key">AIzaSyBniQ6czyDGCswBEjFY5Xd4K1tjVHpGVos</string>
+</resources>
