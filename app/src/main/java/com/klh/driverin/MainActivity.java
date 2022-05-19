@@ -97,13 +97,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (mMap == null)
             return;
 
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("geofire");
+        GeoFire geoFire = new GeoFire(ref);
 
-
-        /*FirebaseDatabase database = FirebaseDatabase.getInstance();
-        String somi_id2 = "klhdb";
-        DatabaseReference myRef3 = database.getReference("current");
-        GeoFire geoFire = new GeoFire(myRef3);
-        geoFire.setLocation(somi_id2,new GeoLocation(location.getLatitude(),location.getLongitude()));*/
+        if (location != null) {
+            geoFire.setLocation("driver", new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
+                @Override
+                public void onComplete(String key, DatabaseError error) {
+                    if (error != null || error.equals("null")) {
+                        Log.d("onComplete", "Write complete");
+                    } else {
+                        Log.d("onComplete", "Write Failed:\t" + error.getMessage());
+                    }
+                }
+            });
+        }
     }
 
     @Override
