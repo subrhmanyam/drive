@@ -3,6 +3,7 @@ package com.klh.driverin;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -51,8 +52,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    String routeSelected=null;
     @Override
     protected void onResume() {
+
+        Intent intent = getIntent();
+
+        // check intent is null or not
+        if(intent != null){
+            routeSelected = intent.getStringExtra("ROUTE");
+        }
+
         super.onResume();
         getLocationFromLocationManager();
     }
@@ -101,14 +111,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         GeoFire geoFire = new GeoFire(ref);
 
         if (location != null) {
-            geoFire.setLocation("driver", new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
+            geoFire.setLocation(routeSelected, new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
                 @Override
                 public void onComplete(String key, DatabaseError error) {
-                    if (error != null || error.equals("null")) {
-                        Log.d("onComplete", "Write complete");
-                    } else {
-                        Log.d("onComplete", "Write Failed:\t" + error.getMessage());
-                    }
+
                 }
             });
         }
